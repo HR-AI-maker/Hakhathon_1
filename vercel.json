@@ -1,0 +1,40 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "rag_api/main.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "frontend/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/auth/(.*)",
+      "dest": "rag_api/main.py"
+    },
+    {
+      "src": "/chat",
+      "dest": "rag_api/main.py"
+    },
+    {
+      "src": "/ask",
+      "dest": "rag_api/main.py"
+    },
+    {
+      "src": "/health",
+      "dest": "rag_api/main.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "frontend/$1"
+    }
+  ],
+  "env": {
+    "GEMINI_API_KEY": "@gemini_api_key",
+    "SESSION_SECRET_KEY": "@session_secret_key",
+    "ADMIN_PASSWORD": "@admin_password"
+  }
+}

@@ -1,0 +1,33 @@
+# Physical AI Textbook RAG Backend Dependencies
+
+# Web Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+
+# Gemini AI SDK
+google-generativeai==0.3.2
+
+# Vector Database (optional - for full RAG mode)
+qdrant-client==1.7.0
+
+# PostgreSQL
+psycopg2-binary==2.9.9
+
+# Environment Variables
+python-dotenv==1.0.0
+
+# Utilities
+requests==2.31.0
+tqdm==4.66.1
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+
+# Data Processing
+numpy==1.26.2
+pandas==2.1.3
+
+# CORS Support (for web integration)
+python-multipart==0.0.6

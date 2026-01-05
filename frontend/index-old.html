@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physical AI & Humanoid Robotics - RAG Tutor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .main-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .modules-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+        }
+
+        .modules-section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .module-badge {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .module-badge:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .module-badge h3 {
+            font-size: 0.9em;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .module-badge p {
+            font-size: 0.8em;
+            color: #666;
+        }
+
+        .chat-section {
+            margin-top: 30px;
+        }
+
+        .chat-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .question-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        #questionInput {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        #questionInput:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        #askButton {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        #askButton:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        #askButton:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .response-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .response-section.visible {
+            display: block;
+        }
+
+        .answer-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 20px;
+        }
+
+        .answer-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .answer-text {
+            color: #555;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+
+        .sources-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .sources-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .source-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .source-item h4 {
+            font-size: 1em;
+            margin-bottom: 5px;
+        }
+
+        .source-item p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .confidence {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-size: 0.85em;
+            margin-top: 5px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #c33;
+            margin-bottom: 20px;
+        }
+
+        .sample-questions {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .sample-questions h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1em;
+        }
+
+        .sample-question {
+            display: inline-block;
+            padding: 8px 15px;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 20px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            color: #667eea;
+            transition: all 0.2s;
+        }
+
+        .sample-question:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .api-status {
+            text-align: center;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+
+        .api-status.connected {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .api-status.disconnected {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .main-card {
+                padding: 20px;
+            }
+
+            .question-form {
+                flex-direction: column;
+            }
+
+            #askButton {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Physical AI & Humanoid Robotics</h1>
+            <p>AI-Native Textbook with RAG Tutor</p>
+            <div class="status-badge">Interactive Learning Assistant</div>
+        </div>
+
+        <div class="main-card">
+            <div id="apiStatus" class="api-status">Checking API connection...</div>
+
+            <div class="modules-section">
+                <h2>Course Modules (27,687 words)</h2>
+                <div class="modules-grid">
+                    <div class="module-badge">
+                        <h3>Introduction</h3>
+                        <p>Physical AI Fundamentals</p>
+                    </div>
+                    <div class="module-badge">
+                        <h3>Module 1</h3>
+                        <p>ROS 2 - Nervous System</p>
+                    </div>
+                    <div class="module-badge">
+                        <h3>Module 2</h3>
+                        <p>Digital Twin</p>
+                    </div>
+                    <div class="module-badge">
+                        <h3>Module 4</h3>
+                        <p>Vision-Language-Action</p>
+                    </div>
+                    <div class="module-badge">
+                        <h3>Capstone</h3>
+                        <p>Autonomous Humanoid</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-section">
+                <h2>Ask the RAG Tutor</h2>
+
+                <div class="question-form">
+                    <input
+                        type="text"
+                        id="questionInput"
+                        placeholder="Ask a question about Physical AI, ROS 2, Digital Twins, VLA..."
+                        aria-label="Question input"
+                    >
+                    <button id="askButton" onclick="askQuestion()">Ask</button>
+                </div>
+
+                <div class="sample-questions">
+                    <h3>Try these sample questions:</h3>
+                    <span class="sample-question" onclick="setQuestion('What is Physical AI?')">What is Physical AI?</span>
+                    <span class="sample-question" onclick="setQuestion('What is ROS 2?')">What is ROS 2?</span>
+                    <span class="sample-question" onclick="setQuestion('What is a digital twin?')">What is a digital twin?</span>
+                    <span class="sample-question" onclick="setQuestion('How does VLA work?')">How does VLA work?</span>
+                    <span class="sample-question" onclick="setQuestion('What is embodied intelligence?')">What is embodied intelligence?</span>
+                </div>
+
+                <div id="loadingSection" class="loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Searching the textbook and generating answer...</p>
+                </div>
+
+                <div id="errorSection" style="display: none;">
+                    <div class="error-message">
+                        <strong>Error:</strong> <span id="errorText"></span>
+                    </div>
+                </div>
+
+                <div id="responseSection" class="response-section">
+                    <div class="answer-card">
+                        <h3>Answer</h3>
+                        <div class="answer-text" id="answerText"></div>
+                    </div>
+
+                    <div class="sources-card">
+                        <h3>Sources from Textbook</h3>
+                        <div id="sourcesContainer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8000';
+        let apiConnected = false;
+
+        // Check API health on load
+        async function checkAPIHealth() {
+            const statusDiv = document.getElementById('apiStatus');
+            try {
+                const response = await fetch(`${API_BASE_URL}/health`);
+                const data = await response.json();
+
+                if (data.status === 'ok' || data.status === 'degraded') {
+                    apiConnected = true;
+                    statusDiv.className = 'api-status connected';
+                    statusDiv.textContent = `API Connected (${data.status === 'degraded' ? 'Demo Mode - Limited functionality' : 'Fully operational'})`;
+                } else {
+                    throw new Error('API not ready');
+                }
+            } catch (error) {
+                apiConnected = false;
+                statusDiv.className = 'api-status disconnected';
+                statusDiv.textContent = 'API Connection Failed - Please start the backend server';
+            }
+        }
+
+        // Set question from sample
+        function setQuestion(question) {
+            document.getElementById('questionInput').value = question;
+            document.getElementById('questionInput').focus();
+        }
+
+        // Ask question
+        async function askQuestion() {
+            const questionInput = document.getElementById('questionInput');
+            const question = questionInput.value.trim();
+
+            if (!question) {
+                alert('Please enter a question');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('loadingSection').style.display = 'block';
+            document.getElementById('responseSection').classList.remove('visible');
+            document.getElementById('errorSection').style.display = 'none';
+            document.getElementById('askButton').disabled = true;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/ask`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ question })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.detail || 'Failed to get answer');
+                }
+
+                displayAnswer(data);
+            } catch (error) {
+                displayError(error.message);
+            } finally {
+                document.getElementById('loadingSection').style.display = 'none';
+                document.getElementById('askButton').disabled = false;
+            }
+        }
+
+        // Display answer
+        function displayAnswer(data) {
+            document.getElementById('answerText').textContent = data.answer;
+
+            const sourcesContainer = document.getElementById('sourcesContainer');
+            sourcesContainer.innerHTML = '';
+
+            if (data.sources && data.sources.length > 0) {
+                data.sources.forEach(source => {
+                    const sourceDiv = document.createElement('div');
+                    sourceDiv.className = 'source-item';
+                    sourceDiv.innerHTML = `
+                        <h4>${source.citation_id}</h4>
+                        <p><strong>Module:</strong> ${source.module}</p>
+                        <p><strong>Section:</strong> ${source.section_title}</p>
+                        <span class="confidence">Confidence: ${(source.confidence * 100).toFixed(1)}%</span>
+                    `;
+                    sourcesContainer.appendChild(sourceDiv);
+                });
+            } else {
+                sourcesContainer.innerHTML = '<p>No sources found</p>';
+            }
+
+            document.getElementById('responseSection').classList.add('visible');
+        }
+
+        // Display error
+        function displayError(message) {
+            document.getElementById('errorText').textContent = message;
+            document.getElementById('errorSection').style.display = 'block';
+        }
+
+        // Enter key support
+        document.getElementById('questionInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                askQuestion();
+            }
+        });
+
+        // Check API on load
+        checkAPIHealth();
+        setInterval(checkAPIHealth, 30000); // Check every 30 seconds
+    </script>
+</body>
+</html>

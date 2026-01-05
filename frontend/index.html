@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physical AI & Humanoid Robotics - Authenticated RAG Tutor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: fadeIn 0.8s ease-in;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .user-info {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+        }
+
+        .user-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .main-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        /* Login Form Styles */
+        .login-container {
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .login-container h2 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .demo-credentials {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        /* Chat Section Styles */
+        .chat-section {
+            display: none;
+        }
+
+        .chat-section.visible {
+            display: block;
+        }
+
+        .chat-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .question-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        #questionInput {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        #questionInput:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        #askButton {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        #askButton:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        #askButton:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .response-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .response-section.visible {
+            display: block;
+        }
+
+        .answer-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 20px;
+        }
+
+        .answer-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .answer-text {
+            color: #555;
+            line-height: 1.8;
+            font-size: 1.05em;
+            white-space: pre-wrap;
+        }
+
+        .sources-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .sources-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .source-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .source-item h4 {
+            font-size: 1em;
+            margin-bottom: 5px;
+        }
+
+        .source-item p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .confidence {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-size: 0.85em;
+            margin-top: 5px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #c33;
+            margin-bottom: 20px;
+        }
+
+        .sample-questions {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .sample-questions h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1em;
+        }
+
+        .sample-question {
+            display: inline-block;
+            padding: 8px 15px;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 20px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            color: #667eea;
+            transition: all 0.2s;
+        }
+
+        .sample-question:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .rate-limit-notice {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ffc107;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .main-card {
+                padding: 20px;
+            }
+
+            .question-form {
+                flex-direction: column;
+            }
+
+            #askButton {
+                width: 100%;
+            }
+
+            .user-info {
+                position: static;
+                justify-content: center;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Physical AI & Humanoid Robotics</h1>
+            <p>Authenticated RAG Tutor with Gemini AI</p>
+
+            <div class="user-info" id="userInfo" style="display: none;">
+                <span class="user-badge" id="userBadge"></span>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+
+        <div class="main-card">
+            <!-- Login Form -->
+            <div id="loginSection" class="login-container">
+                <h2>Login Required</h2>
+                <p style="color: #666; margin-bottom: 30px;">Please sign in to access the AI-powered chatbot</p>
+
+                <form id="loginForm" onsubmit="login(event)">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" required>
+                    </div>
+
+                    <button type="submit" class="login-btn">Login</button>
+                </form>
+
+                <div class="demo-credentials">
+                    <strong>Demo Credentials:</strong><br>
+                    Username: <code>demo</code><br>
+                    Password: <code>demo123</code>
+                </div>
+
+                <div id="loginError" class="error-message" style="display: none; margin-top: 20px;"></div>
+            </div>
+
+            <!-- Chat Section -->
+            <div id="chatSection" class="chat-section">
+                <h2>Ask the Authenticated RAG Tutor</h2>
+
+                <div class="question-form">
+                    <input
+                        type="text"
+                        id="questionInput"
+                        placeholder="Ask about Physical AI, ROS 2, Digital Twins, VLA..."
+                        aria-label="Question input"
+                    >
+                    <button id="askButton" onclick="askQuestion()">Ask</button>
+                </div>
+
+                <div class="sample-questions">
+                    <h3>Try these sample questions:</h3>
+                    <span class="sample-question" onclick="setQuestion('What is Physical AI?')">What is Physical AI?</span>
+                    <span class="sample-question" onclick="setQuestion('What is ROS 2?')">What is ROS 2?</span>
+                    <span class="sample-question" onclick="setQuestion('What is a digital twin?')">What is a digital twin?</span>
+                    <span class="sample-question" onclick="setQuestion('How does VLA work?')">How does VLA work?</span>
+                    <span class="sample-question" onclick="setQuestion('What is embodied intelligence?')">What is embodied intelligence?</span>
+                </div>
+
+                <div id="rateLimitNotice" class="rate-limit-notice" style="display: none;"></div>
+
+                <div id="loadingSection" class="loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Gemini is thinking...</p>
+                </div>
+
+                <div id="errorSection" style="display: none;">
+                    <div class="error-message">
+                        <strong>Error:</strong> <span id="errorText"></span>
+                    </div>
+                </div>
+
+                <div id="responseSection" class="response-section">
+                    <div class="answer-card">
+                        <h3>Answer</h3>
+                        <div class="answer-text" id="answerText"></div>
+                    </div>
+
+                    <div class="sources-card">
+                        <h3>Sources from Textbook</h3>
+                        <div id="sourcesContainer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto-detect API URL (works on localhost and Vercel)
+        const API_BASE_URL = window.location.hostname === 'localhost'
+            ? 'http://localhost:8000'
+            : window.location.origin;
+        let authenticated = false;
+        let currentUser = null;
+
+        // Check authentication status on load
+        async function checkAuth() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/status`, {
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+
+                if (data.authenticated) {
+                    showChatInterface(data.user_id);
+                } else {
+                    showLoginForm();
+                }
+            } catch (error) {
+                console.error('Auth check failed:', error);
+                showLoginForm();
+            }
+        }
+
+        // Login
+        async function login(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('loginError');
+
+            errorDiv.style.display = 'none';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ username, password })
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Login failed');
+                }
+
+                const data = await response.json();
+                showChatInterface(data.user_id);
+
+            } catch (error) {
+                errorDiv.textContent = error.message;
+                errorDiv.style.display = 'block';
+            }
+        }
+
+        // Logout
+        async function logout() {
+            try {
+                await fetch(`${API_BASE_URL}/auth/logout`, {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+
+                showLoginForm();
+            } catch (error) {
+                console.error('Logout failed:', error);
+                showLoginForm();
+            }
+        }
+
+        // Show login form
+        function showLoginForm() {
+            authenticated = false;
+            currentUser = null;
+
+            document.getElementById('loginSection').style.display = 'block';
+            document.getElementById('chatSection').classList.remove('visible');
+            document.getElementById('userInfo').style.display = 'none';
+
+            // Clear form
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        // Show chat interface
+        function showChatInterface(userId) {
+            authenticated = true;
+            currentUser = userId;
+
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('chatSection').classList.add('visible');
+            document.getElementById('userInfo').style.display = 'flex';
+            document.getElementById('userBadge').textContent = `Logged in as ${userId}`;
+        }
+
+        // Set question from sample
+        function setQuestion(question) {
+            document.getElementById('questionInput').value = question;
+            document.getElementById('questionInput').focus();
+        }
+
+        // Ask question
+        async function askQuestion() {
+            const questionInput = document.getElementById('questionInput');
+            const question = questionInput.value.trim();
+
+            if (!question) {
+                alert('Please enter a question');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('loadingSection').style.display = 'block';
+            document.getElementById('responseSection').classList.remove('visible');
+            document.getElementById('errorSection').style.display = 'none';
+            document.getElementById('rateLimitNotice').style.display = 'none';
+            document.getElementById('askButton').disabled = true;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/chat`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ question })
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+
+                    // Handle 401 - session expired
+                    if (response.status === 401) {
+                        alert('Session expired. Please login again.');
+                        showLoginForm();
+                        return;
+                    }
+
+                    // Handle 429 - rate limit
+                    if (response.status === 429) {
+                        showRateLimitError(error.detail);
+                        return;
+                    }
+
+                    throw new Error(error.detail || 'Failed to get answer');
+                }
+
+                const data = await response.json();
+                displayAnswer(data);
+
+            } catch (error) {
+                displayError(error.message);
+            } finally {
+                document.getElementById('loadingSection').style.display = 'none';
+                document.getElementById('askButton').disabled = false;
+            }
+        }
+
+        // Display answer
+        function displayAnswer(data) {
+            document.getElementById('answerText').textContent = data.answer;
+
+            const sourcesContainer = document.getElementById('sourcesContainer');
+            sourcesContainer.innerHTML = '';
+
+            if (data.sources && data.sources.length > 0) {
+                data.sources.forEach(source => {
+                    const sourceDiv = document.createElement('div');
+                    sourceDiv.className = 'source-item';
+                    sourceDiv.innerHTML = `
+                        <h4>${source.citation_id}</h4>
+                        <p><strong>Module:</strong> ${source.module}</p>
+                        <p><strong>Section:</strong> ${source.section_title}</p>
+                        <span class="confidence">Confidence: ${(source.confidence * 100).toFixed(1)}%</span>
+                    `;
+                    sourcesContainer.appendChild(sourceDiv);
+                });
+            } else {
+                sourcesContainer.innerHTML = '<p>No sources found</p>';
+            }
+
+            document.getElementById('responseSection').classList.add('visible');
+        }
+
+        // Display error
+        function displayError(message) {
+            document.getElementById('errorText').textContent = message;
+            document.getElementById('errorSection').style.display = 'block';
+        }
+
+        // Show rate limit error
+        function showRateLimitError(detail) {
+            const notice = document.getElementById('rateLimitNotice');
+            if (detail.message) {
+                notice.textContent = detail.message;
+            } else if (typeof detail === 'string') {
+                notice.textContent = detail;
+            } else {
+                notice.textContent = 'Rate limit exceeded. Please try again later.';
+            }
+            notice.style.display = 'block';
+            document.getElementById('askButton').disabled = true;
+            setTimeout(() => {
+                notice.style.display = 'none';
+                document.getElementById('askButton').disabled = false;
+            }, detail.retry_after ? detail.retry_after * 1000 : 60000);
+        }
+
+        // Enter key support
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('questionInput').addEventListener('keypress', function(event) {
+                if (event.key === 'Enter' && authenticated) {
+                    askQuestion();
+                }
+            });
+
+            // Check auth on load
+            checkAuth();
+        });
+    </script>
+</body>
+</html>
