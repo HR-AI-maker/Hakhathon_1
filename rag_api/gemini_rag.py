@@ -6,7 +6,7 @@ Handles RAG-based question answering using Google Gemini API
 import os
 import google.generativeai as genai
 from typing import List, Dict, Optional
-from content_search import search_content
+from .content_search import search_content
 
 # Configure Gemini API
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")

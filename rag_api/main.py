@@ -23,10 +23,10 @@ import psycopg2
 from psycopg2.extras import Json
 
 # Import demo mode content search
-from content_search import demo_ask
+from .content_search import demo_ask
 
 # Import authentication system
-from auth import (
+from .auth import (
     SessionManager,
     authenticate_user,
     get_session_from_request,
@@ -36,7 +36,7 @@ from auth import (
 )
 
 # Import Gemini RAG system
-from gemini_rag import gemini_rag_ask
+from .gemini_rag import gemini_rag_ask
 
 # Load environment variables
 load_dotenv()
