@@ -1,0 +1,176 @@
+========================================
+VERCEL ENVIRONMENT VARIABLES
+STEP-BY-STEP GUIDE
+========================================
+
+Follow these steps EXACTLY:
+
+========================================
+STEP 1: OPEN YOUR PROJECT
+========================================
+
+In Vercel Dashboard (should be open in browser):
+1. Look for your project card (named "claude" or similar)
+2. CLICK ON THE PROJECT NAME (not the Visit button)
+3. You'll see the project overview page
+
+
+========================================
+STEP 2: GO TO SETTINGS
+========================================
+
+At the TOP of the page, you'll see tabs:
+- Overview
+- Deployments
+- Analytics
+- Settings  <--- CLICK THIS ONE
+- etc.
+
+CLICK "Settings"
+
+
+========================================
+STEP 3: OPEN ENVIRONMENT VARIABLES
+========================================
+
+On the LEFT sidebar, you'll see:
+- General
+- Domains
+- Environment Variables  <--- CLICK THIS ONE
+- Git
+- etc.
+
+CLICK "Environment Variables"
+
+
+========================================
+STEP 4: ADD FIRST KEY - GEMINI_API_KEY
+========================================
+
+You'll see a button that says "Add New" or "Add"
+
+CLICK "Add New"
+
+A form will appear:
+
+┌─────────────────────────────────────┐
+│ Name (Key)                          │
+│ [                                 ] │
+└─────────────────────────────────────┘
+
+TYPE: GEMINI_API_KEY
+
+┌─────────────────────────────────────┐
+│ Value                               │
+│ [                                 ] │
+└─────────────────────────────────────┘
+
+PASTE: Your Gemini API key (starts with AIza...)
+
+┌─────────────────────────────────────┐
+│ Environments                        │
+│ ☐ Production                        │
+│ ☐ Preview                           │
+│ ☐ Development                       │
+└─────────────────────────────────────┘
+
+CHECK ALL THREE BOXES ✓✓✓
+
+CLICK "Save"
+
+
+========================================
+STEP 5: ADD SECOND KEY - SESSION_SECRET_KEY
+========================================
+
+CLICK "Add New" again
+
+Name (Key):
+SESSION_SECRET_KEY
+
+Value:
+2ce8dab0bea856a5ee545c24302790a948db1dd50fd3fc8a43d19fe91cb7c612
+
+Environments:
+✓ Production
+✓ Preview
+✓ Development
+
+CLICK "Save"
+
+
+========================================
+STEP 6: ADD THIRD KEY - ADMIN_PASSWORD
+========================================
+
+CLICK "Add New" again
+
+Name (Key):
+ADMIN_PASSWORD
+
+Value:
+[Type your own password - e.g., MySecure2024!]
+
+Environments:
+✓ Production
+✓ Preview
+✓ Development
+
+CLICK "Save"
+
+
+========================================
+STEP 7: VERIFY ALL KEYS ARE ADDED
+========================================
+
+You should now see 3 environment variables listed:
+
+✓ GEMINI_API_KEY          Production, Preview, Development
+✓ SESSION_SECRET_KEY      Production, Preview, Development
+✓ ADMIN_PASSWORD          Production, Preview, Development
+
+
+========================================
+STEP 8: REDEPLOY (CRITICAL!)
+========================================
+
+At the TOP of the page, CLICK "Deployments" tab
+
+You'll see a list of your deployments
+
+Find the MOST RECENT one (at the top)
+
+On the right side, click the THREE DOTS "..."
+
+Select "Redeploy"
+
+A popup will appear - CLICK "Redeploy" again to confirm
+
+Wait 1-2 minutes for redeployment to complete
+
+
+========================================
+STEP 9: TEST YOUR APP
+========================================
+
+After redeployment is complete:
+
+1. Go back to "Overview" or click "Visit"
+2. Your app should open in a new tab
+3. Login with: demo / demo123
+4. Ask: "What is Physical AI?"
+5. You should get an AI response!
+
+
+========================================
+DONE! 🎉
+========================================
+
+Your Vercel app now has all the keys and is fully functional!
+
+
+========================================
+NEED HELP AT ANY STEP?
+========================================
+
+Tell me which step you're on and I'll guide you!

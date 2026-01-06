@@ -15,7 +15,8 @@ from typing import List, Dict, Optional
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from qdrant_client import QdrantClient
 import openai
@@ -23,20 +24,29 @@ import psycopg2
 from psycopg2.extras import Json
 
 # Import demo mode content search
-from .content_search import demo_ask
-
-# Import authentication system
-from .auth import (
-    SessionManager,
-    authenticate_user,
-    get_session_from_request,
-    require_auth,
-    rate_limit,
-    SESSION_COOKIE_NAME
-)
-
-# Import Gemini RAG system
-from .gemini_rag import gemini_rag_ask
+try:
+    from .content_search import demo_ask
+    from .auth import (
+        SessionManager,
+        authenticate_user,
+        get_session_from_request,
+        require_auth,
+        rate_limit,
+        SESSION_COOKIE_NAME
+    )
+    from .gemini_rag import gemini_rag_ask
+except ImportError:
+    # Fallback to direct imports when running as script
+    from content_search import demo_ask
+    from auth import (
+        SessionManager,
+        authenticate_user,
+        get_session_from_request,
+        require_auth,
+        rate_limit,
+        SESSION_COOKIE_NAME
+    )
+    from gemini_rag import gemini_rag_ask
 
 # Load environment variables
 load_dotenv()
@@ -73,6 +83,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Serve frontend
+FRONTEND_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")
+if os.path.exists(FRONTEND_PATH):
+    app.mount("/static", StaticFiles(directory=FRONTEND_PATH), name="static")
 
 # Request/Response Models
 class Query(BaseModel):
@@ -468,6 +483,14 @@ async def ask_question(query: Query):
             )
         except:
             raise HTTPException(status_code=500, detail=f"Error processing query: {str(e)}")
+
+@app.get("/")
+async def serve_frontend():
+    """Serve the frontend HTML"""
+    frontend_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend", "index.html")
+    if os.path.exists(frontend_file):
+        return FileResponse(frontend_file)
+    return {"message": "Frontend not found"}
 
 @app.get("/health")
 async def health_check():

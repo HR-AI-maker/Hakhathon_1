@@ -1,0 +1,53 @@
+# Environment Variables for Vercel
+# Copy these to Vercel Dashboard → Settings → Environment Variables
+
+# ============================================
+# REQUIRED VARIABLES (App won't work without these)
+# ============================================
+
+# 1. GEMINI_API_KEY
+# Get from: https://makersuite.google.com/app/apikey
+# Value: (paste your Gemini API key here)
+GEMINI_API_KEY=
+
+# 2. SESSION_SECRET_KEY
+# Generate with: python -c "import secrets; print(secrets.token_hex(32))"
+# Value: (paste generated secret here)
+SESSION_SECRET_KEY=
+
+# 3. ADMIN_PASSWORD
+# Choose a secure password
+# Value: (enter your password here)
+ADMIN_PASSWORD=
+
+# ============================================
+# OPTIONAL VARIABLES (For full RAG mode with OpenAI)
+# ============================================
+
+# OpenAI API Key (if using GPT-4 instead of Gemini)
+OPENAI_API_KEY=
+
+# Qdrant Vector Database (already configured)
+QDRANT_API_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIn0.i_17XFcFgePIA3QwXtZgJ4Sgune8vtie6TSDwLcHG3o
+QDRANT_CLUSTER_URL=https://dbdf8d97-4356-4b17-af69-1ebd8a201af6.europe-west3-0.gcp.cloud.qdrant.io
+
+# Postgres Database (if you want query logging)
+NEON_DATABASE_URL=
+
+# ============================================
+# HOW TO ADD TO VERCEL:
+# ============================================
+# 1. Go to https://vercel.com/dashboard
+# 2. Click on your project
+# 3. Settings → Environment Variables
+# 4. Click "Add New"
+# 5. Enter Name and Value for each variable above
+# 6. Select all environments (Production, Preview, Development)
+# 7. Click Save
+# 8. Redeploy: vercel --prod
+
+# ============================================
+# DEMO CREDENTIALS (for testing login):
+# ============================================
+# Username: demo
+# Password: demo123

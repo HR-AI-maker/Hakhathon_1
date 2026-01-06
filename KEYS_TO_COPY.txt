@@ -1,0 +1,50 @@
+========================================
+COPY THESE VALUES EXACTLY
+========================================
+
+When adding to Vercel, copy from here:
+
+========================================
+KEY 1: GEMINI_API_KEY
+========================================
+
+Name:
+GEMINI_API_KEY
+
+Value:
+[Paste your Gemini API key here - the one you got from Google that starts with AIza]
+
+
+========================================
+KEY 2: SESSION_SECRET_KEY
+========================================
+
+Name:
+SESSION_SECRET_KEY
+
+Value:
+2ce8dab0bea856a5ee545c24302790a948db1dd50fd3fc8a43d19fe91cb7c612
+
+
+========================================
+KEY 3: ADMIN_PASSWORD
+========================================
+
+Name:
+ADMIN_PASSWORD
+
+Value:
+[Type your chosen password here - e.g., MySecure2024!]
+
+
+========================================
+REMEMBER FOR EACH KEY:
+========================================
+
+✓ Check Production
+✓ Check Preview
+✓ Check Development
+
+Then click Save!
+
+========================================

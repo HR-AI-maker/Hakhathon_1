@@ -264,15 +264,6 @@
             opacity: 0.9;
         }
 
-        .confidence {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 3px 10px;
-            border-radius: 5px;
-            font-size: 0.85em;
-            margin-top: 5px;
-        }
-
         .loading {
             text-align: center;
             padding: 40px;
@@ -656,7 +647,6 @@
                         <h4>${source.citation_id}</h4>
                         <p><strong>Module:</strong> ${source.module}</p>
                         <p><strong>Section:</strong> ${source.section_title}</p>
-                        <span class="confidence">Confidence: ${(source.confidence * 100).toFixed(1)}%</span>
                     `;
                     sourcesContainer.appendChild(sourceDiv);
                 });

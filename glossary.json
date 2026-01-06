@@ -1,0 +1,357 @@
+{
+  "glossary_version": "1.0",
+  "total_terms": 50,
+  "last_updated": "2026-01-05",
+  "terms": [
+    {
+      "term": "Physical AI",
+      "definition": "Intelligence deployed in the physical world, where an agent must perceive, reason, and act under real-time constraints and environmental uncertainty.",
+      "modules": ["introduction", "capstone"],
+      "first_mention": "intro-sec1",
+      "related_terms": ["embodied intelligence", "digital AI"]
+    },
+    {
+      "term": "Embodied Intelligence",
+      "definition": "The recognition that cognition is grounded in perception and physical action, with reasoning arising from the continuous coupling of sensing, decision-making, and action.",
+      "modules": ["introduction"],
+      "first_mention": "intro-sec2",
+      "related_terms": ["Physical AI", "action-centric cognition"]
+    },
+    {
+      "term": "Digital Twin",
+      "definition": "A high-fidelity simulation model that mirrors a real or hypothetical robotic system, including geometry, mass properties, dynamics, and sensors.",
+      "modules": ["introduction", "digital-twin", "capstone"],
+      "first_mention": "intro-sec4",
+      "related_terms": ["simulation-first", "Gazebo", "reality gap"]
+    },
+    {
+      "term": "Reality Gap",
+      "definition": "The mismatch between simulated and real-world behavior due to physics approximations, sensor imperfections, and unmodeled effects.",
+      "modules": ["digital-twin", "capstone"],
+      "first_mention": "digital-twin-sec2",
+      "related_terms": ["digital twin", "simulation fidelity", "sim-to-real"]
+    },
+    {
+      "term": "ROS 2",
+      "definition": "Robot Operating System 2, the middleware communication infrastructure that allows distributed robotic components to work as a coherent system.",
+      "modules": ["introduction", "ros2-nervous-system", "digital-twin", "vla", "capstone"],
+      "first_mention": "intro-sec5",
+      "related_terms": ["nodes", "topics", "services", "actions", "DDS"]
+    },
+    {
+      "term": "Node",
+      "definition": "An independent, executable process within a ROS 2 system that communicates with other nodes via publish-subscribe messaging.",
+      "modules": ["ros2-nervous-system"],
+      "first_mention": "ros2-sec2",
+      "related_terms": ["ROS 2", "DDS", "topics"]
+    },
+    {
+      "term": "Topic",
+      "definition": "A named channel in ROS 2 implementing publish-subscribe pattern where nodes broadcast messages and subscribers receive copies asynchronously.",
+      "modules": ["ros2-nervous-system", "digital-twin"],
+      "first_mention": "ros2-sec3",
+      "related_terms": ["pub-sub", "ROS 2", "messages"]
+    },
+    {
+      "term": "Service",
+      "definition": "A ROS 2 communication pattern implementing synchronous request-response interaction between a client node and a service node.",
+      "modules": ["ros2-nervous-system"],
+      "first_mention": "ros2-sec4",
+      "related_terms": ["request-response", "ROS 2", "topics"]
+    },
+    {
+      "term": "Action",
+      "definition": "A ROS 2 pattern for handling long-running, goal-oriented tasks with feedback, allowing clients to send goals, receive periodic feedback, and get final results.",
+      "modules": ["ros2-nervous-system", "capstone"],
+      "first_mention": "ros2-sec5",
+      "related_terms": ["ROS 2", "goals", "feedback"]
+    },
+    {
+      "term": "URDF",
+      "definition": "Unified Robot Description Format, an XML-based language for describing robotic structure including links, joints, and kinematic relationships.",
+      "modules": ["ros2-nervous-system", "digital-twin", "capstone"],
+      "first_mention": "ros2-sec7",
+      "related_terms": ["robot description", "kinematics", "links", "joints"]
+    },
+    {
+      "term": "Gazebo",
+      "definition": "Open-source physics simulation software that acts as a ROS 2 node, providing high-fidelity physics simulation including gravity, collisions, and sensor data.",
+      "modules": ["digital-twin", "capstone"],
+      "first_mention": "intro-sec4",
+      "related_terms": ["digital twin", "physics simulation", "ROS 2 integration"]
+    },
+    {
+      "term": "Unity",
+      "definition": "Real-time rendering engine used for visualization and perception simulation, complementing Gazebo by providing photorealistic rendering.",
+      "modules": ["digital-twin"],
+      "first_mention": "digital-twin-sec8",
+      "related_terms": ["Gazebo", "visualization", "perception rendering"]
+    },
+    {
+      "term": "LiDAR",
+      "definition": "Light Detection and Ranging sensor that emits laser pulses and measures return time to compute distance to objects.",
+      "modules": ["digital-twin", "capstone"],
+      "first_mention": "digital-twin-sec5",
+      "related_terms": ["sensor simulation", "range sensing", "perception"]
+    },
+    {
+      "term": "IMU",
+      "definition": "Inertial Measurement Unit that measures acceleration and angular velocity, essential for robot balance and orientation estimation.",
+      "modules": ["digital-twin"],
+      "first_mention": "digital-twin-sec5",
+      "related_terms": ["sensor simulation", "acceleration", "gyroscope"]
+    },
+    {
+      "term": "VLA",
+      "definition": "Vision-Language-Action system that integrates natural language understanding, visual perception, and motor planning into a unified cognitive layer.",
+      "modules": ["introduction", "vla", "capstone"],
+      "first_mention": "intro-sec5",
+      "related_terms": ["agentic AI", "cognitive core", "perception grounding"]
+    },
+    {
+      "term": "Agent Loop",
+      "definition": "The continuous cycle of perceive → reason → act → observe → replan that defines agentic behavior in VLA systems.",
+      "modules": ["vla", "capstone"],
+      "first_mention": "vla-sec1",
+      "related_terms": ["VLA", "closed-loop", "adaptive reasoning"]
+    },
+    {
+      "term": "Perception Grounding",
+      "definition": "The process of linking visual perception outputs to language concepts, enabling robots to understand references like 'the blue cup'.",
+      "modules": ["vla", "capstone"],
+      "first_mention": "vla-sec2",
+      "related_terms": ["VLA", "object detection", "spatial relationships"]
+    },
+    {
+      "term": "World State",
+      "definition": "The agent's internal representation of the environment containing objects, properties, relationships, task state, and constraints.",
+      "modules": ["vla", "capstone"],
+      "first_mention": "vla-sec3",
+      "related_terms": ["memory", "agent state", "perception"]
+    },
+    {
+      "term": "Intent Parsing",
+      "definition": "Extracting goals or actions from natural language commands, converting human instructions into executable robot tasks.",
+      "modules": ["vla", "capstone"],
+      "first_mention": "vla-sec4",
+      "related_terms": ["language understanding", "goal extraction", "VLA"]
+    },
+    {
+      "term": "Replanning",
+      "definition": "The process of generating new sub-plans when the environment changes, actions fail, or new information becomes available.",
+      "modules": ["vla", "capstone"],
+      "first_mention": "vla-sec7",
+      "related_terms": ["adaptive reasoning", "failure detection", "agent loop"]
+    },
+    {
+      "term": "Architectural Safety",
+      "definition": "Safety constraints enforced by the execution layer (hardware limits, velocity saturation, collision detection) regardless of cognitive commands.",
+      "modules": ["vla", "capstone"],
+      "first_mention": "vla-sec8",
+      "related_terms": ["safety", "execution layer", "force limits"]
+    },
+    {
+      "term": "DDS",
+      "definition": "Distributed Data Service, the publish-subscribe messaging system underlying ROS 2 that handles routing, buffering, and serialization.",
+      "modules": ["ros2-nervous-system"],
+      "first_mention": "ros2-sec2",
+      "related_terms": ["ROS 2", "pub-sub", "middleware"]
+    },
+    {
+      "term": "rclpy",
+      "definition": "The Python client library for ROS 2, allowing Python programs to subscribe to topics, publish messages, call services, and use actions.",
+      "modules": ["ros2-nervous-system"],
+      "first_mention": "ros2-sec6",
+      "related_terms": ["Python", "ROS 2", "AI-ROS bridge"]
+    },
+    {
+      "term": "Inverse Kinematics",
+      "definition": "The computation of joint angles required to achieve a desired end-effector pose, essential for robot manipulation.",
+      "modules": ["ros2-nervous-system", "capstone"],
+      "first_mention": "ros2-sec7",
+      "related_terms": ["URDF", "kinematics", "end-effector"]
+    },
+    {
+      "term": "Simulation-First Development",
+      "definition": "A strategic approach where algorithms are developed and validated in high-fidelity simulation before deployment to real hardware.",
+      "modules": ["introduction", "digital-twin", "capstone"],
+      "first_mention": "intro-sec4",
+      "related_terms": ["digital twin", "Gazebo", "validation"]
+    },
+    {
+      "term": "Friction",
+      "definition": "The force opposing motion when two surfaces slide against each other, modeled in physics simulation using Coulomb friction.",
+      "modules": ["digital-twin"],
+      "first_mention": "digital-twin-sec3",
+      "related_terms": ["physics simulation", "contact dynamics", "coefficient of friction"]
+    },
+    {
+      "term": "Center of Mass",
+      "definition": "The point where an object's mass is concentrated, critical for humanoid robot balance and stability calculations.",
+      "modules": ["digital-twin", "capstone"],
+      "first_mention": "digital-twin-sec3",
+      "related_terms": ["stability", "balance", "bipedal walking"]
+    },
+    {
+      "term": "Collision Detection",
+      "definition": "The physics engine's process of detecting when two objects touch and computing forces to prevent interpenetration.",
+      "modules": ["digital-twin", "capstone"],
+      "first_mention": "digital-twin-sec3",
+      "related_terms": ["physics simulation", "contact", "safety"]
+    },
+    {
+      "term": "Sensor Noise",
+      "definition": "Random fluctuations in sensor measurements around true values, essential to simulate for robust algorithm development.",
+      "modules": ["digital-twin"],
+      "first_mention": "digital-twin-sec5",
+      "related_terms": ["sensor simulation", "LiDAR", "cameras", "IMU"]
+    },
+    {
+      "term": "Sim-to-Real Transfer",
+      "definition": "The process of deploying algorithms trained in simulation to real hardware, with success depending on simulation fidelity and reality gap management.",
+      "modules": ["digital-twin", "capstone"],
+      "first_mention": "digital-twin-sec2",
+      "related_terms": ["reality gap", "validation", "transfer confidence"]
+    },
+    {
+      "term": "Hierarchical Planning",
+      "definition": "Decomposing complex tasks into multiple levels of abstraction, from high-level goals to executable low-level actions.",
+      "modules": ["vla", "capstone"],
+      "first_mention": "vla-sec5",
+      "related_terms": ["planning", "task decomposition", "VLA"]
+    },
+    {
+      "term": "Failure Detection",
+      "definition": "Identifying when expected state (after executing an action) doesn't match actual perceived state, triggering replanning.",
+      "modules": ["vla", "capstone"],
+      "first_mention": "vla-sec6",
+      "related_terms": ["monitoring", "feedback", "replanning"]
+    },
+    {
+      "term": "Fallback Strategy",
+      "definition": "A hierarchy of recovery actions when primary plans fail, from retry to alternative actions to human escalation.",
+      "modules": ["vla", "capstone"],
+      "first_mention": "vla-sec8",
+      "related_terms": ["failure handling", "recovery", "escalation"]
+    },
+    {
+      "term": "Four-Agent Architecture",
+      "definition": "The capstone system design with Cognitive VLA Agent, Execution & Safety Agent, Simulation & Validation Agent, and AI-Native Supervision Agent.",
+      "modules": ["capstone"],
+      "first_mention": "capstone-sec3",
+      "related_terms": ["multi-agent", "system architecture", "capstone"]
+    },
+    {
+      "term": "Cognitive VLA Agent",
+      "definition": "The decision-making agent that understands language, maintains world state, plans actions, monitors execution, and replans.",
+      "modules": ["capstone"],
+      "first_mention": "capstone-sec3",
+      "related_terms": ["VLA", "four-agent architecture", "cognitive core"]
+    },
+    {
+      "term": "Execution & Safety Agent",
+      "definition": "The agent that executes VLA commands while enforcing safety constraints through velocity limits, force limits, and collision detection.",
+      "modules": ["capstone"],
+      "first_mention": "capstone-sec3",
+      "related_terms": ["safety", "ROS 2 controllers", "architectural safety"]
+    },
+    {
+      "term": "Simulation & Validation Agent",
+      "definition": "The agent that validates proposed plans in digital twin simulation before deployment, reporting feasibility and transfer confidence.",
+      "modules": ["capstone"],
+      "first_mention": "capstone-sec3",
+      "related_terms": ["digital twin", "validation", "reality gap"]
+    },
+    {
+      "term": "AI-Native Supervision Agent",
+      "definition": "The agent enabling human supervision through queries, plan inspection, override authority, and RAG-grounded explanations.",
+      "modules": ["capstone"],
+      "first_mention": "capstone-sec3",
+      "related_terms": ["human-in-the-loop", "RAG tutor", "oversight"]
+    },
+    {
+      "term": "RAG Tutor",
+      "definition": "Retrieval-Augmented Generation system that answers questions by searching the textbook and synthesizing responses grounded strictly in course content.",
+      "modules": ["introduction", "capstone"],
+      "first_mention": "intro-sec6",
+      "related_terms": ["AI-native textbook", "supervision", "grounding"]
+    },
+    {
+      "term": "Spec-Kit Plus",
+      "definition": "Specification-driven writing framework ensuring all textbook content derives from formal specifications and acceptance criteria.",
+      "modules": ["introduction"],
+      "first_mention": "intro-sec6",
+      "related_terms": ["AI-native textbook", "specification-driven", "Claude Code"]
+    },
+    {
+      "term": "Nav2",
+      "definition": "ROS 2 navigation framework that handles path planning, obstacle avoidance, and locomotion for mobile robots.",
+      "modules": ["ros2-nervous-system", "capstone"],
+      "first_mention": "intro-sec5",
+      "related_terms": ["navigation", "ROS 2", "path planning"]
+    },
+    {
+      "term": "Isaac ROS",
+      "definition": "NVIDIA's optimized perception pipelines for ROS 2 including visual SLAM, depth processing, and object detection.",
+      "modules": ["introduction", "capstone"],
+      "first_mention": "intro-sec5",
+      "related_terms": ["perception", "ROS 2", "NVIDIA"]
+    },
+    {
+      "term": "End-Effector",
+      "definition": "The terminal point of a kinematic chain that performs the actual task (e.g., robot hand, gripper).",
+      "modules": ["ros2-nervous-system"],
+      "first_mention": "ros2-sec7",
+      "related_terms": ["kinematics", "URDF", "manipulation"]
+    },
+    {
+      "term": "Joint State",
+      "definition": "The current angles, velocities, and forces of all robot joints, published continuously by ROS 2 for monitoring and control.",
+      "modules": ["ros2-nervous-system", "digital-twin"],
+      "first_mention": "ros2-sec2",
+      "related_terms": ["ROS 2", "topics", "URDF"]
+    },
+    {
+      "term": "Closed-Loop System",
+      "definition": "A system where actions are followed by perception of results, enabling continuous feedback and adaptation.",
+      "modules": ["vla", "capstone"],
+      "first_mention": "vla-sec1",
+      "related_terms": ["agent loop", "feedback", "adaptive behavior"]
+    },
+    {
+      "term": "Human-in-the-Loop",
+      "definition": "System design where humans maintain oversight through query interfaces, plan inspection, override authority, and escalation protocols.",
+      "modules": ["introduction", "capstone"],
+      "first_mention": "intro-sec9",
+      "related_terms": ["supervision", "oversight", "safety"]
+    },
+    {
+      "term": "Transfer Confidence",
+      "definition": "Assessment of how likely a behavior validated in simulation is to succeed in reality, accounting for reality gap effects.",
+      "modules": ["capstone"],
+      "first_mention": "capstone-sec6",
+      "related_terms": ["sim-to-real", "validation", "reality gap"]
+    },
+    {
+      "term": "Validation Framework",
+      "definition": "Systematic approach to assessing simulation fidelity, identifying reality gaps, and computing transfer confidence for robot behaviors.",
+      "modules": ["capstone"],
+      "first_mention": "capstone-sec6",
+      "related_terms": ["simulation", "digital twin", "transfer confidence"]
+    },
+    {
+      "term": "Elder Care Use Case",
+      "definition": "Representative application where humanoid robot assists elderly person with mobility limitations through fetch tasks and household assistance.",
+      "modules": ["capstone"],
+      "first_mention": "capstone-sec7",
+      "related_terms": ["real-world application", "safety constraints", "ethics"]
+    },
+    {
+      "term": "Escalation Protocol",
+      "definition": "Defined procedure for robot to request human intervention when facing high uncertainty, ambiguity, or potential hazards.",
+      "modules": ["capstone"],
+      "first_mention": "capstone-sec8",
+      "related_terms": ["human-in-the-loop", "supervision", "fallback"]
+    }
+  ]
+}

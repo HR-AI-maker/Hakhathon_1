@@ -1,0 +1,141 @@
+========================================
+YOUR API KEYS FOR VERCEL DEPLOYMENT
+========================================
+
+Copy these values to Vercel Dashboard:
+https://vercel.com/dashboard → Your Project → Settings → Environment Variables
+
+========================================
+KEY 1: GEMINI_API_KEY
+========================================
+
+HOW TO GET IT:
+1. I just opened this page in your browser:
+   https://aistudio.google.com/app/apikey
+
+2. Sign in with your Google account
+
+3. Click the blue "Create API Key" button
+
+4. Select "Create API key in new project" (or use existing project)
+
+5. Copy the API key (starts with "AIza...")
+
+6. PASTE IT BELOW (replace the line):
+
+GEMINI_API_KEY=PASTE_YOUR_KEY_HERE
+
+
+========================================
+KEY 2: SESSION_SECRET_KEY (READY!)
+========================================
+
+This key is already generated for you!
+Just copy this entire line:
+
+SESSION_SECRET_KEY=2ce8dab0bea856a5ee545c24302790a948db1dd50fd3fc8a43d19fe91cb7c612
+
+
+========================================
+KEY 3: ADMIN_PASSWORD
+========================================
+
+Choose a strong password for admin access.
+Examples:
+- MySecurePassword2024!
+- Admin@Hakathon2024
+- PhysicalAI#2024
+
+WRITE YOUR CHOSEN PASSWORD BELOW:
+
+ADMIN_PASSWORD=YOUR_PASSWORD_HERE
+
+
+========================================
+HOW TO ADD TO VERCEL (After filling above)
+========================================
+
+1. Go to: https://vercel.com/dashboard
+
+2. Click on your project (the one you just deployed)
+
+3. Click "Settings" tab at the top
+
+4. Click "Environment Variables" in the left sidebar
+
+5. For each key above, click "Add New":
+
+   For GEMINI_API_KEY:
+   - Name: GEMINI_API_KEY
+   - Value: [paste the key you got from Google]
+   - Environment: Check all three (Production, Preview, Development)
+   - Click Save
+
+   For SESSION_SECRET_KEY:
+   - Name: SESSION_SECRET_KEY
+   - Value: 2ce8dab0bea856a5ee545c24302790a948db1dd50fd3fc8a43d19fe91cb7c612
+   - Environment: Check all three
+   - Click Save
+
+   For ADMIN_PASSWORD:
+   - Name: ADMIN_PASSWORD
+   - Value: [your chosen password]
+   - Environment: Check all three
+   - Click Save
+
+6. After adding all three, redeploy:
+   Run: vercel --prod
+   OR
+   In Vercel Dashboard → Deployments → Click ... → Redeploy
+
+
+========================================
+DEMO LOGIN CREDENTIALS
+========================================
+
+After deployment, you can test login with:
+
+Username: demo
+Password: demo123
+
+
+========================================
+CHECKLIST
+========================================
+
+[ ] Opened Gemini API page (I did this for you)
+[ ] Created Gemini API key
+[ ] Copied GEMINI_API_KEY to this file
+[ ] Chose ADMIN_PASSWORD
+[ ] Went to Vercel Dashboard
+[ ] Added GEMINI_API_KEY to Vercel
+[ ] Added SESSION_SECRET_KEY to Vercel
+[ ] Added ADMIN_PASSWORD to Vercel
+[ ] Redeployed the app
+[ ] Tested the live URL
+
+
+========================================
+IMPORTANT NOTES
+========================================
+
+1. Keep this file PRIVATE - it contains your secret keys!
+
+2. The SESSION_SECRET_KEY is for securing user sessions
+
+3. GEMINI_API_KEY is for the AI chatbot functionality
+
+4. ADMIN_PASSWORD is for admin-level access
+
+5. After adding keys to Vercel, you MUST redeploy for them to work!
+
+
+========================================
+NEED HELP?
+========================================
+
+If you get stuck:
+1. Make sure you're signed in to Google for Gemini API
+2. Gemini API is FREE to use (with quota limits)
+3. All three keys are REQUIRED for the app to work
+4. Don't forget to redeploy after adding keys!

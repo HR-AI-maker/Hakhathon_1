@@ -1,0 +1,46 @@
+========================================
+COPY THESE VALUES TO VERCEL
+========================================
+
+Use these exact values when adding to Vercel Dashboard
+
+
+KEY 1 NAME:
+GEMINI_API_KEY
+
+KEY 1 VALUE:
+[Your Gemini API key that starts with AIza...]
+
+
+----------------------------------------
+
+KEY 2 NAME:
+SESSION_SECRET_KEY
+
+KEY 2 VALUE:
+2ce8dab0bea856a5ee545c24302790a948db1dd50fd3fc8a43d19fe91cb7c612
+
+
+----------------------------------------
+
+KEY 3 NAME:
+ADMIN_PASSWORD
+
+KEY 3 VALUE:
+[Choose your password - e.g., MySecure2024!]
+
+
+========================================
+IMPORTANT REMINDERS
+========================================
+
+✓ Check ALL THREE environment boxes for each key:
+  - Production
+  - Preview
+  - Development
+
+✓ After adding all 3 keys, you MUST redeploy!
+
+✓ Save this file - you'll need these values!
+
+========================================

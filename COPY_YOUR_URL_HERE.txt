@@ -1,0 +1,25 @@
+========================================
+YOUR VERCEL URL INSTRUCTIONS
+========================================
+
+I just opened the Vercel Dashboard in your browser.
+
+FOLLOW THESE STEPS:
+
+1. Look at the browser that just opened
+2. You'll see your project listed (probably named "claude" or similar)
+3. The URL is shown right there - it looks like:
+
+   https://something-something.vercel.app
+
+4. COPY that URL
+5. PASTE it in the chat with Claude
+
+========================================
+THAT'S IT!
+========================================
+
+Example of what to paste:
+https://claude-abc123.vercel.app
+
+Just copy the URL from the browser and paste it!
