@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "rag_api/main.py",
+      "src": "api/index.py",
       "use": "@vercel/python"
     },
     {
@@ -13,19 +13,19 @@
   "routes": [
     {
       "src": "/auth/(.*)",
-      "dest": "rag_api/main.py"
+      "dest": "api/index.py"
     },
     {
       "src": "/chat",
-      "dest": "rag_api/main.py"
+      "dest": "api/index.py"
     },
     {
       "src": "/ask",
-      "dest": "rag_api/main.py"
+      "dest": "api/index.py"
     },
     {
       "src": "/health",
-      "dest": "rag_api/main.py"
+      "dest": "api/index.py"
     },
     {
       "src": "/(.*)",
