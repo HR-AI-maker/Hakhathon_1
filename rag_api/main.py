@@ -18,10 +18,26 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
-from qdrant_client import QdrantClient
-import openai
-import psycopg2
-from psycopg2.extras import Json
+
+# Optional imports for full RAG mode (gracefully handle if not available)
+try:
+    from qdrant_client import QdrantClient
+    QDRANT_AVAILABLE = True
+except ImportError:
+    QDRANT_AVAILABLE = False
+
+try:
+    import openai
+    OPENAI_AVAILABLE = True
+except ImportError:
+    OPENAI_AVAILABLE = False
+
+try:
+    import psycopg2
+    from psycopg2.extras import Json
+    POSTGRES_AVAILABLE = True
+except ImportError:
+    POSTGRES_AVAILABLE = False
 
 # Import demo mode content search
 try:
@@ -64,9 +80,14 @@ LLM_MAX_TOKENS = int(os.getenv("LLM_MAX_TOKENS", "500"))
 RAG_TOP_K = int(os.getenv("RAG_TOP_K", "3"))
 RAG_MIN_CONFIDENCE = float(os.getenv("RAG_MIN_CONFIDENCE", "0.7"))
 
-# Initialize clients
-openai.api_key = OPENAI_API_KEY
-qdrant_client = QdrantClient(url=QDRANT_CLUSTER_URL, api_key=QDRANT_API_KEY)
+# Initialize clients (only if available)
+if OPENAI_AVAILABLE and OPENAI_API_KEY:
+    openai.api_key = OPENAI_API_KEY
+
+if QDRANT_AVAILABLE and QDRANT_API_KEY and QDRANT_CLUSTER_URL:
+    qdrant_client = QdrantClient(url=QDRANT_CLUSTER_URL, api_key=QDRANT_API_KEY)
+else:
+    qdrant_client = None
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -213,6 +234,10 @@ Answer:"""
 
 def log_query_to_db(question: str, answer: str, sources: List[Source], execution_time_ms: int):
     """Log query and response to Postgres for analytics"""
+    if not POSTGRES_AVAILABLE or not NEON_DATABASE_URL:
+        # Skip logging in demo mode
+        return
+
     try:
         conn = psycopg2.connect(NEON_DATABASE_URL)
         cur = conn.cursor()
@@ -495,23 +520,30 @@ async def serve_frontend():
 @app.get("/health")
 async def health_check():
     """Health check endpoint"""
-    try:
-        # Test Qdrant connection
-        qdrant_client.get_collection("textbook_chunks")
-        qdrant_status = "ok"
-    except Exception as e:
-        qdrant_status = f"error: {str(e)}"
+    # Test Qdrant connection
+    if QDRANT_AVAILABLE and qdrant_client:
+        try:
+            qdrant_client.get_collection("textbook_chunks")
+            qdrant_status = "ok"
+        except Exception as e:
+            qdrant_status = f"error: {str(e)}"
+    else:
+        qdrant_status = "not configured (demo mode)"
 
-    try:
-        # Test Postgres connection
-        conn = psycopg2.connect(NEON_DATABASE_URL)
-        conn.close()
-        postgres_status = "ok"
-    except Exception as e:
-        postgres_status = f"error: {str(e)}"
+    # Test Postgres connection
+    if POSTGRES_AVAILABLE and NEON_DATABASE_URL:
+        try:
+            conn = psycopg2.connect(NEON_DATABASE_URL)
+            conn.close()
+            postgres_status = "ok"
+        except Exception as e:
+            postgres_status = f"error: {str(e)}"
+    else:
+        postgres_status = "not configured (demo mode)"
 
     return {
-        "status": "ok" if qdrant_status == "ok" and postgres_status == "ok" else "degraded",
+        "status": "ok",
+        "mode": "demo" if not (QDRANT_AVAILABLE and POSTGRES_AVAILABLE) else "full",
         "qdrant": qdrant_status,
         "postgres": postgres_status,
         "model": LLM_MODEL
@@ -520,6 +552,12 @@ async def health_check():
 @app.get("/stats")
 async def get_stats():
     """Get RAG system statistics"""
+    if not POSTGRES_AVAILABLE or not NEON_DATABASE_URL:
+        return {
+            "mode": "demo",
+            "message": "Statistics not available in demo mode"
+        }
+
     try:
         conn = psycopg2.connect(NEON_DATABASE_URL)
         cur = conn.cursor()
