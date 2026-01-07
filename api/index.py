@@ -1,5 +1,6 @@
 """
 Vercel Serverless Function Entry Point
+Version: 2.0 - Demo mode with optional dependencies
 """
 import sys
 import os
