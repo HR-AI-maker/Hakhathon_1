@@ -4,8 +4,16 @@ Handles RAG-based question answering using Google Gemini API
 """
 
 import os
-import google.generativeai as genai
 from typing import List, Dict, Optional
+
+# Optional import for Gemini (gracefully handle if not available)
+try:
+    import google.generativeai as genai
+    GENAI_AVAILABLE = True
+except ImportError:
+    GENAI_AVAILABLE = False
+    genai = None
+
 try:
     from .content_search import search_content
 except ImportError:
@@ -14,7 +22,7 @@ except ImportError:
 # Configure Gemini API
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-if GEMINI_API_KEY:
+if GENAI_AVAILABLE and GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
 
 # Gemini model configuration
@@ -75,6 +83,9 @@ def generate_with_gemini(question: str, sources: List[Dict]) -> tuple[str, str]:
     Returns: (answer: str, model: str)
     Raises: Exception on API failures
     """
+
+    if not GENAI_AVAILABLE:
+        raise ValueError("Google Generative AI package not available")
 
     if not GEMINI_API_KEY:
         raise ValueError("GEMINI_API_KEY not configured")
