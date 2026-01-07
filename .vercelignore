@@ -1,0 +1,16 @@
+.env
+.env.local
+venv/
+__pycache__/
+*.pyc
+.git/
+node_modules/
+.DS_Store
+*.log
+.vercel
+.specify/
+specs/
+history/
+tests/
+*.md
+!README.md
